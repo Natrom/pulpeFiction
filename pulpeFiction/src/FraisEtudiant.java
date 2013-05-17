@@ -1,3 +1,5 @@
+
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -51,6 +53,11 @@ public class FraisEtudiant extends javax.swing.JFrame {
         jButton1.setText("Impréssion fiche remboursement");
 
         jButton2.setText("Saisie frais mensuel");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clicSaisieFraisMensuel(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,6 +109,12 @@ public class FraisEtudiant extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void clicSaisieFraisMensuel(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clicSaisieFraisMensuel
+        SaisieFrais saisie=new SaisieFrais(this, true);
+        saisie.setVisible(true);
+        saisie.setLocation(500, 400);
+    }//GEN-LAST:event_clicSaisieFraisMensuel
 
     /**
      * @param args the command line arguments

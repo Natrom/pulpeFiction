@@ -24,25 +24,30 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Component id="editionConvention1" max="32767" attributes="0"/>
-                  <Component id="nouveauClient" alignment="0" max="32767" attributes="0"/>
-                  <Component id="choixEquipe" alignment="0" max="32767" attributes="0"/>
-                  <Component id="editionConvention" alignment="0" pref="152" max="32767" attributes="0"/>
-              </Group>
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="nouveauProjet" min="-2" pref="152" max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="editionConvention1" max="32767" attributes="0"/>
+                          <Component id="nouveauClient" alignment="0" max="32767" attributes="0"/>
+                          <Component id="choixEquipe" alignment="0" max="32767" attributes="0"/>
+                          <Component id="editionConvention" alignment="0" pref="152" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="nouveauProjet" min="-2" pref="152" max="-2" attributes="0"/>
+                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="acompteEtudiant" max="32767" attributes="0"/>
+                          <Component id="editionConvention2" alignment="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <Component id="acompteEtudiant" max="32767" attributes="0"/>
-                  <Component id="editionConvention2" alignment="0" max="32767" attributes="0"/>
+                  <Component id="ConsultationProjet" alignment="0" pref="310" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -71,7 +76,9 @@
                   <Component id="editionConvention1" alignment="3" min="-2" pref="62" max="-2" attributes="0"/>
                   <Component id="editionConvention2" alignment="3" min="-2" pref="62" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="ConsultationProjet" min="-2" pref="62" max="-2" attributes="0"/>
+              <EmptySpace pref="35" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -81,6 +88,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Nouveau Client"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clicNouveauClient"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="nouveauProjet">
       <Properties>
@@ -131,6 +141,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editionConvention2ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="ConsultationProjet">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Consultation Projet"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ConsultationProjetActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
