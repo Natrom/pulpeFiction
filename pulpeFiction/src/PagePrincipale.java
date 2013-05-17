@@ -31,6 +31,8 @@ public class PagePrincipale extends javax.swing.JFrame {
         choixEquipe = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         acompteEtudiant = new javax.swing.JButton();
+        editionConvention1 = new javax.swing.JButton();
+        editionConvention2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Page Principale");
@@ -63,16 +65,31 @@ public class PagePrincipale extends javax.swing.JFrame {
             }
         });
 
+        editionConvention1.setText("Frais etudiant");
+        editionConvention1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editionConvention1ActionPerformed(evt);
+            }
+        });
+
+        editionConvention2.setText("Edition facture");
+        editionConvention2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editionConvention2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(nouveauClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(choixEquipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(editionConvention, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(editionConvention1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nouveauClient, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(choixEquipe, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editionConvention, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -80,7 +97,8 @@ public class PagePrincipale extends javax.swing.JFrame {
                             .addComponent(nouveauProjet, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(acompteEtudiant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(acompteEtudiant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editionConvention2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -98,6 +116,10 @@ public class PagePrincipale extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editionConvention, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(acompteEtudiant, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editionConvention1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editionConvention2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -115,6 +137,14 @@ public class PagePrincipale extends javax.swing.JFrame {
     private void acompteEtudiantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acompteEtudiantActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_acompteEtudiantActionPerformed
+
+    private void editionConvention1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editionConvention1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editionConvention1ActionPerformed
+
+    private void editionConvention2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editionConvention2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editionConvention2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,6 +184,8 @@ public class PagePrincipale extends javax.swing.JFrame {
     private javax.swing.JButton acompteEtudiant;
     private javax.swing.JButton choixEquipe;
     private javax.swing.JButton editionConvention;
+    private javax.swing.JButton editionConvention1;
+    private javax.swing.JButton editionConvention2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton nouveauClient;
     private javax.swing.JButton nouveauProjet;
