@@ -169,7 +169,9 @@ public class PagePrincipale extends javax.swing.JFrame {
     }//GEN-LAST:event_ConsultationProjetActionPerformed
 
     private void clicNouveauClient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clicNouveauClient
-        NouveauClient Client=new NouveauClient();
+        this.setVisible(false);
+        NouveauClient Client = new NouveauClient();
+        Client.setVisible(true);
     }//GEN-LAST:event_clicNouveauClient
 
     /**
