@@ -1,4 +1,6 @@
 
+import DAO.DAOClient;
+import beans.Client;
 import javax.swing.JOptionPane;
 
 /*
@@ -78,6 +80,11 @@ public class NouveauClient extends javax.swing.JFrame {
         });
 
         validerNouvClient.setText("Valider");
+        validerNouvClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                validerCreationClient(evt);
+            }
+        });
 
         jButton1.setText("Annuler");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -182,6 +189,18 @@ public class NouveauClient extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_clicAnnulerNC
+
+    private void validerCreationClient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerCreationClient
+        Client client= new Client();
+        client.setNom_client(nomClient.getText());
+        client.setAdresse_client(adresseClient.getText());
+        String tel=telephoneClient.getText();
+        client.setTelephone_client(Integer.parseInt(tel));
+        
+        DAOClient daoClient=new DAOClient(null);
+        
+        
+    }//GEN-LAST:event_validerCreationClient
 
     /**
      * @param args the command line arguments
