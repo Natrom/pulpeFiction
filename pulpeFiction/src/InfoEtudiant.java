@@ -43,6 +43,11 @@ public class InfoEtudiant extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jListInfoEtudiant);
 
         jButtonRetourMenu.setText("Retour Menu");
+        jButtonRetourMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retourMenu(evt);
+            }
+        });
 
         jButtonImprimFicheEtudiant.setText("Imprimer Fiche");
 
@@ -84,7 +89,7 @@ public class InfoEtudiant extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jLabel1)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 734, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -103,7 +108,7 @@ public class InfoEtudiant extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(56, 56, 56)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(jButtonImprimFicheEtudiant)
                 .addGap(25, 25, 25))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,6 +122,10 @@ public class InfoEtudiant extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void retourMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourMenu
+        this.dispose();
+    }//GEN-LAST:event_retourMenu
 
     /**
      * @param args the command line arguments

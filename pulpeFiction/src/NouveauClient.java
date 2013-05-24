@@ -1,8 +1,10 @@
+
+import javax.swing.JOptionPane;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author p1207333
@@ -171,8 +173,14 @@ public class NouveauClient extends javax.swing.JFrame {
     }//GEN-LAST:event_contactClientActionPerformed
 
     private void clicAnnulerNC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clicAnnulerNC
-        this.setVisible(false);
-        
+        JOptionPane res = null;
+        int option = res.showConfirmDialog(null,
+                "Voulez-vous réellement annuler?", "Retour au menu principale",
+                JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            this.dispose();
+        }
+
     }//GEN-LAST:event_clicAnnulerNC
 
     /**

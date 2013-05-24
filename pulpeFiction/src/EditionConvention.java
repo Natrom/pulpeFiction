@@ -37,6 +37,7 @@ public class EditionConvention extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         editionConvAfficheNumConv = new javax.swing.JLabel();
         imprimerConvention = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Edition Convention");
@@ -68,6 +69,13 @@ public class EditionConvention extends javax.swing.JFrame {
 
         imprimerConvention.setText("Impression Convetion");
 
+        jButton1.setText("Retour ");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retourMenu(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -93,7 +101,8 @@ public class EditionConvention extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(editionConvAfficheNumConv))
-                    .addComponent(imprimerConvention))
+                    .addComponent(imprimerConvention)
+                    .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -120,11 +129,17 @@ public class EditionConvention extends javax.swing.JFrame {
                     .addComponent(editionConvAfficheNumConv))
                 .addGap(18, 18, 18)
                 .addComponent(imprimerConvention)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void retourMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourMenu
+        this.dispose();
+    }//GEN-LAST:event_retourMenu
 
     /**
      * @param args the command line arguments
@@ -166,6 +181,7 @@ public class EditionConvention extends javax.swing.JFrame {
     private javax.swing.JLabel editionConvNumClient;
     private javax.swing.JLabel editionConvProjetSelectionne;
     private javax.swing.JButton imprimerConvention;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;

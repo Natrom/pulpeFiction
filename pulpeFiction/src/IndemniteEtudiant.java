@@ -35,6 +35,7 @@ public class IndemniteEtudiant extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         ajoutAcompte = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,6 +73,13 @@ public class IndemniteEtudiant extends javax.swing.JFrame {
 
         jButton1.setText("Impréssion fiche indemnité");
 
+        jButton2.setText("Retour");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retourMenu(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -92,7 +100,9 @@ public class IndemniteEtudiant extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(ajoutAcompte)
                         .addGap(115, 115, 115)
-                        .addComponent(jButton1))
+                        .addComponent(jButton1)
+                        .addGap(78, 78, 78)
+                        .addComponent(jButton2))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -116,12 +126,17 @@ public class IndemniteEtudiant extends javax.swing.JFrame {
                 .addGap(70, 70, 70)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ajoutAcompte)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void retourMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourMenu
+        this.dispose();
+    }//GEN-LAST:event_retourMenu
 
     /**
      * @param args the command line arguments
@@ -160,6 +175,7 @@ public class IndemniteEtudiant extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ajoutAcompte;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
