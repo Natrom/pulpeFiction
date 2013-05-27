@@ -1,4 +1,8 @@
 
+import DAO.DAOFactory;
+import DAO.DAOProjet;
+import beans.Client;
+import beans.Projet;
 import javax.swing.JOptionPane;
 
 /*
@@ -40,7 +44,7 @@ public class NouveauProjet extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         validerNouvProjet = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
+        clientSelectionne = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -56,15 +60,23 @@ public class NouveauProjet extends javax.swing.JFrame {
 
         jLabel5.setText("Prix/journée :");
 
-        jLabel6.setText("Client :");
+        jLabel6.setText("Id client :");
 
         validerNouvProjet.setText("Valider");
+        validerNouvProjet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                valider(evt);
+            }
+        });
 
         jButton1.setText("Recherche Client");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rechercheClient(evt);
+            }
+        });
 
-        jLabel9.setText("jLabel9");
-
-        jButton2.setText("Annuler");
+        jButton2.setText("Retour");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AnnulerCreationProjet(evt);
@@ -77,7 +89,7 @@ public class NouveauProjet extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -93,12 +105,10 @@ public class NouveauProjet extends javax.swing.JFrame {
                             .addComponent(dateFinPrevue, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                             .addComponent(prixJournee, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                             .addComponent(nomProjet)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(validerNouvProjet))
-                    .addComponent(jButton1))
+                            .addComponent(clientSelectionne, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jButton2)
+                    .addComponent(jButton1)
+                    .addComponent(validerNouvProjet))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -129,11 +139,11 @@ public class NouveauProjet extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(validerNouvProjet)
-                    .addComponent(jButton2))
+                    .addComponent(clientSelectionne, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(validerNouvProjet)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addComponent(jButton2)
                 .addContainerGap())
         );
 
@@ -146,8 +156,31 @@ public class NouveauProjet extends javax.swing.JFrame {
                 "Voulez-vous réellement annuler?", "Retour au menu principale",
                 JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
+            this.dispose();
+        }
     }//GEN-LAST:event_AnnulerCreationProjet
-    }
+
+    private void rechercheClient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercheClient
+        Client client = new Client();
+        RechercheClient recherche = new RechercheClient(this, true, client);
+        clientSelectionne.setText(String.valueOf(recherche.getClient().getId_client()));
+    }//GEN-LAST:event_rechercheClient
+
+    private void valider(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valider
+        Projet projet=new Projet();
+        Client client=new Client();
+        client.setId_client(Integer.parseInt(clientSelectionne.getText()));
+        projet.setNom_projet(nomProjet.getText());
+        projet.setDuree_projet(Integer.parseInt(dureeProjet.getText()));
+        projet.setDate_fin_projet(dateFinPrevue.getText());
+        projet.setPrix_journee(Integer.parseInt(prixJournee.getText()));
+        
+        DAOFactory daoFactory= new DAOFactory();
+        DAOProjet daoProjet= daoFactory.getDAOProjet();
+        
+        daoProjet.addProjet(projet,client);
+        
+    }//GEN-LAST:event_valider
 
     /**
      * @param args the command line arguments
@@ -184,6 +217,7 @@ public class NouveauProjet extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel clientSelectionne;
     private javax.swing.JTextField dateFinPrevue;
     private javax.swing.JTextField dureeProjet;
     private javax.swing.JButton jButton1;
@@ -194,10 +228,10 @@ public class NouveauProjet extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField nomProjet;
     private javax.swing.JLabel numeroProjet;
     private javax.swing.JTextField prixJournee;
     private javax.swing.JButton validerNouvProjet;
     // End of variables declaration//GEN-END:variables
+
 }

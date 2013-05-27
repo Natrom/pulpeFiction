@@ -10,49 +10,51 @@ package beans;
  */
 public class Client {
 
-    private int id_client;
-    private String nom_client;
-    private String adresse_client;
-    private int telephone_client;
-    private String nom_contact;
+    private int idClient;
+    private String nomClient;
+    private String adresseClient;
+    private int telephoneClient;
+    private String nomContact;
 
-    public int getId_projet() {
-        return id_client;
+    public int getId_client() {
+        return idClient;
     }
 
-    public void setId_projet(int id_client) {
-        this.id_client = id_client;
+    public void setId_client(int idClient) {
+        this.idClient = idClient;
     }
+
+    
 
     public String getNom_client() {
-        return nom_client;
+        return nomClient;
     }
 
-    public void setNom_client(String nom_client) {
-        this.nom_client = nom_client;
+    public void setNom_client(String nomClient) {
+        this.nomClient = nomClient;
     }
 
     public String getAdresse_client() {
-        return adresse_client;
+        return adresseClient;
     }
 
     public void setAdresse_client(String adresse_client) {
-        this.adresse_client = adresse_client;
+        this.adresseClient = adresse_client;
     }
 
     public int getTelephone_client() {
-        return telephone_client;
+        return telephoneClient;
     }
 
     public void setTelephone_client(int telephone_client) {
-        this.telephone_client = telephone_client;
+        this.telephoneClient = telephone_client;
     }
 
     public String getNom_contact() {
-        return nom_contact;
+        return nomContact;
     }
 
     public void setNom_contact(String nom_contact) {
-        this.nom_contact = nom_contact;
+        this.nomContact = nom_contact;
     }
 }

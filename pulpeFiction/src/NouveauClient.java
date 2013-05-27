@@ -1,5 +1,6 @@
 
 import DAO.DAOClient;
+import DAO.DAOFactory;
 import beans.Client;
 import javax.swing.JOptionPane;
 
@@ -196,10 +197,13 @@ public class NouveauClient extends javax.swing.JFrame {
         client.setAdresse_client(adresseClient.getText());
         String tel=telephoneClient.getText();
         client.setTelephone_client(Integer.parseInt(tel));
+        client.setNom_contact(contactClient.getText());
         
-        DAOClient daoClient=new DAOClient(null);
+        DAOFactory daoFactory= new DAOFactory();
         
+        DAOClient daoClient=daoFactory.getDAOClient();
         
+        daoClient.addClient(client);
     }//GEN-LAST:event_validerCreationClient
 
     /**

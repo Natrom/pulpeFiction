@@ -10,8 +10,8 @@ public class DAOFactory {
 
     private static final String FILE_PROPERTIES = "connection.properties";
     private static final String PROPERTY_URL = "url";
-    //private static final String PROPERTY_USERNAME = "user";
-    //private static final String PROPERTY_PASSWORD = "pwd";
+    private static final String PROPERTY_USERNAME = "user";
+    private static final String PROPERTY_PASSWORD = "pwd";
     private static final String PROPERTY_DRIVER = "driver";
     private String driver;
     private String url;
@@ -25,6 +25,8 @@ public class DAOFactory {
             properties.load(getClass().getResourceAsStream(FILE_PROPERTIES));
             driver = properties.getProperty(PROPERTY_DRIVER);
             url = properties.getProperty(PROPERTY_URL);
+            username = properties.getProperty(PROPERTY_USERNAME);
+            password = properties.getProperty(PROPERTY_PASSWORD);
         } catch (IOException e) {
             throw new DAOConfigException("Unable to load properties file " + FILE_PROPERTIES, e);
         }
@@ -34,23 +36,24 @@ public class DAOFactory {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
         }
+        try {
+            mds = new MysqlDataSource();
+            mds.setUrl(url);
+            mds.setUser(username);
+            mds.setPassword(password);
+        } catch (Exception e) {
+        }
 
-        mds = new MysqlDataSource();
-        mds.setUrl(url);
-        mds.setUser(username);
-        mds.setPassword(password);
     }
 
     public Connection getConnection() throws SQLException {
         return mds.getConnection();
     }
 
-    public DAOClient getDAOUser() {
+    public DAOClient getDAOClient() {
         return new DAOClient(this);
     }
-
-    //public DAOProjet getDAOProjet() {
-      //  return new DAOProjet(this);
-    //}
-
+    public DAOProjet getDAOProjet() {
+      return new DAOProjet(this);
+    }
 }

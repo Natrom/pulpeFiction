@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
+
 
 /**
  *
@@ -19,24 +21,64 @@ public class DAOClient {
     private DAOFactory factory;
 
     public DAOClient(DAOFactory factory) {
-        this.factory=factory;
+        this.factory = factory;
     }
-    public Client addClient(Client client) {
-        Client user = new Client();
+
+    public void addClient(Client client) {
+
         try {
             Connection connection = factory.getConnection();
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO Client(nom_client, adresse_client,"
-                    + "telephone_client, nom_contact ) VALUES ("+client.getNom_client()+","
-                    + client.getAdresse_client()+","+client.getTelephone_client()+","
-                    + client.getNom_contact()+";");
+
+            statement.executeUpdate("INSERT INTO `Client` (`nomClient`, `adresseClient`, `telClient`, `contactClient`) VALUES\n"
+                    + "('" + client.getNom_client() + "', '" + client.getAdresse_client() + "', " + client.getTelephone_client() + ", '" + client.getNom_contact() + "');");
             /* Fermeture des ressources */
+
             statement.close();
             connection.close();
         } catch (SQLException e) {
             throw new dao.DAOException(e.getSQLState());
         }
-        return user;
     }
-    
+
+    @SuppressWarnings("empty-statement")
+    public Vector getClientRecherche(String recepNumCli, String recepNom) {
+        Vector myVector2D = new Vector();
+        try {
+            int recepNUCLI;
+            Connection connection = factory.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = null;
+            System.out.println(recepNom);
+            System.out.println("1");
+            System.out.println(recepNumCli);
+            System.out.println("1");
+            if (!recepNom.isEmpty() && !recepNumCli.isEmpty()) {
+                recepNUCLI = Integer.parseInt(recepNumCli);
+                resultSet = statement.executeQuery("SELECT * FROM Client WHERE `idClient`=" + recepNUCLI + " AND `nomClient`like '%" + recepNom + "%';");
+            } else if (recepNom.isEmpty() && !recepNumCli.isEmpty()) {
+                recepNUCLI = Integer.parseInt(recepNumCli);
+                resultSet = statement.executeQuery("SELECT * FROM Client WHERE `idClient`=" + recepNUCLI + ";");
+            } else if (!recepNom.isEmpty() && recepNumCli.isEmpty()) {
+                resultSet = statement.executeQuery("SELECT * FROM Client WHERE `nomClient`like '%" + recepNom + "%';");
+            }
+            int i = 0;
+
+            while (resultSet.next()) {
+                    Vector line = new Vector();
+
+                    line.add(resultSet.getString("idClient"));
+                    line.add(resultSet.getString("nomClient"));
+                    line.add(resultSet.getString("adresseClient"));
+                    line.add(resultSet.getString("telClient"));
+                    line.add(resultSet.getString("contactClient"));
+
+                    myVector2D.add(line);
+                
+            }
+        } catch (Exception e) {
+        }
+
+        return myVector2D;
+    }
 }

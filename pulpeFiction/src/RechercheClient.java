@@ -1,20 +1,39 @@
+
+import DAO.DAOClient;
+import DAO.DAOFactory;
+import beans.Client;
+import java.util.Vector;
+
+import javax.swing.table.DefaultTableModel;
+
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author root
  */
 public class RechercheClient extends javax.swing.JDialog {
+Client client;
 
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
     /**
      * Creates new form RechercheClient
      */
-    public RechercheClient(java.awt.Frame parent, boolean modal) {
+    public RechercheClient(java.awt.Frame parent, boolean modal, Client client) {
         super(parent, modal);
+        this.client = new Client();
         initComponents();
+        setVisible(true);
+        client = client;
     }
 
     /**
@@ -30,12 +49,15 @@ public class RechercheClient extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         nomClientRecherche = new javax.swing.JTextField();
         numClientRecherche = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        validerClientRecherche = new javax.swing.JButton();
+        afficheClientSelectionne = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        affichageRechercheClient = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        afficheIdDuClientSelectionne = new javax.swing.JLabel();
+        valide = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -43,20 +65,46 @@ public class RechercheClient extends javax.swing.JDialog {
 
         jLabel2.setText("Numéro de client : ");
 
-        jTextField3.setText("résultat de recherche");
-
         jButton1.setText("Rechercher");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boutonRecherche(evt);
+            }
+        });
 
         jLabel3.setText("Client selectionné : ");
-
-        jLabel4.setText("jLabel4");
-
-        validerClientRecherche.setText("Valider");
 
         jButton2.setText("Retour");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        affichageRechercheClient.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Numéro de client", "Nom du client", "Adresse du client", "Téléphone CLient", "Nom ducontact"
+            }
+        ));
+        affichageRechercheClient.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                selectionClient(evt);
+            }
+        });
+        jScrollPane2.setViewportView(affichageRechercheClient);
+
+        jLabel4.setText("id du client :");
+
+        valide.setText("Valider");
+        valide.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                valid(evt);
             }
         });
 
@@ -68,32 +116,32 @@ public class RechercheClient extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(validerClientRecherche)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addGap(30, 30, 30)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(numClientRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(nomClientRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTextField3)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel1)
-                                                .addComponent(jLabel2))
-                                            .addGap(30, 30, 30)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(numClientRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(nomClientRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addComponent(jButton1)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel4)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(valide)
+                                .addGap(35, 35, 35)
+                                .addComponent(jButton2))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(afficheClientSelectionne, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(afficheIdDuClientSelectionne, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))))
+                .addContainerGap(218, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,17 +156,21 @@ public class RechercheClient extends javax.swing.JDialog {
                     .addComponent(jLabel2))
                 .addGap(7, 7, 7)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
+                    .addComponent(afficheClientSelectionne, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(validerClientRecherche)
-                    .addComponent(jButton2))
-                .addContainerGap(45, Short.MAX_VALUE))
+                    .addComponent(jLabel4)
+                    .addComponent(afficheIdDuClientSelectionne, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(valide))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
 
         pack();
@@ -128,57 +180,56 @@ public class RechercheClient extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RechercheClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RechercheClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RechercheClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RechercheClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void boutonRecherche(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonRecherche
+        String recepNumCli = numClientRecherche.getText();
+        String recepNom = nomClientRecherche.getText();
+        Vector vector2D = new Vector();
+        if (!recepNom.isEmpty() || !recepNumCli.isEmpty()) {
+            DAOFactory daoFactory = new DAOFactory();
+            DAOClient daoClient = daoFactory.getDAOClient();
+            vector2D = daoClient.getClientRecherche(recepNumCli, recepNom);
         }
-        //</editor-fold>
+        Vector columnNames = new Vector();
+        columnNames.add("Numéro de client");
+        columnNames.add("Nom du client");
+        columnNames.add("Adresse du client");
+        columnNames.add("Téléphone");
+        columnNames.add("Nom du contact");
+        affichageRechercheClient.setModel(new DefaultTableModel(
+                vector2D,
+                columnNames));
+    }//GEN-LAST:event_boutonRecherche
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                RechercheClient dialog = new RechercheClient(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+    private void selectionClient(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectionClient
+        int ligneSelectionne = affichageRechercheClient.getSelectedRow();
+        String nomClientSelectionne = (String) affichageRechercheClient.getValueAt(ligneSelectionne, 1);
+        String idClientSelectionne = (String) affichageRechercheClient.getValueAt(ligneSelectionne, 0);
+        afficheClientSelectionne.setText(nomClientSelectionne);
+        afficheIdDuClientSelectionne.setText(idClientSelectionne);
+        //client.setId_client((int) affichageRechercheClient.getValueAt(ligneSelectionne, 0));
+        System.out.println("coco");
+        client.setId_client(3);
+        System.out.println("tata");
+
+    }//GEN-LAST:event_selectionClient
+
+    private void valid(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valid
+        this.dispose();
+    }//GEN-LAST:event_valid
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable affichageRechercheClient;
+    private javax.swing.JLabel afficheClientSelectionne;
+    private javax.swing.JLabel afficheIdDuClientSelectionne;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField nomClientRecherche;
     private javax.swing.JTextField numClientRecherche;
-    private javax.swing.JButton validerClientRecherche;
+    public javax.swing.JButton valide;
     // End of variables declaration//GEN-END:variables
+
 }
