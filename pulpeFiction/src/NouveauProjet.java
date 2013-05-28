@@ -3,6 +3,7 @@ import DAO.DAOFactory;
 import DAO.DAOProjet;
 import beans.Client;
 import beans.Projet;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /*
@@ -14,6 +15,8 @@ import javax.swing.JOptionPane;
  * @author p1207333
  */
 public class NouveauProjet extends javax.swing.JFrame {
+
+    StringBuffer date = new StringBuffer();
 
     /**
      * Creates new form NouveauProjet
@@ -54,15 +57,45 @@ public class NouveauProjet extends javax.swing.JFrame {
 
         jLabel2.setText("Nom Projet :");
 
+        nomProjet.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                activerBouton1(evt);
+            }
+        });
+
         jLabel3.setText("Durée du Projet :");
 
-        jLabel4.setText("Date Fin prévue :");
+        dureeProjet.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                activerBouton2(evt);
+            }
+        });
+
+        jLabel4.setText("Date Fin prévue  JJ/MM/AAAA :");
+
+        dateFinPrevue.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                activerBouton3(evt);
+            }
+        });
+        dateFinPrevue.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                keyTypeDate(evt);
+            }
+        });
 
         jLabel5.setText("Prix/journée :");
+
+        prixJournee.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                activerBouton4(evt);
+            }
+        });
 
         jLabel6.setText("Id client :");
 
         validerNouvProjet.setText("Valider");
+        validerNouvProjet.setEnabled(false);
         validerNouvProjet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 valider(evt);
@@ -98,18 +131,23 @@ public class NouveauProjet extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(numeroProjet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dureeProjet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                            .addComponent(dateFinPrevue, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                            .addComponent(prixJournee, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                            .addComponent(nomProjet)
-                            .addComponent(clientSelectionne, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(numeroProjet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(clientSelectionne, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(87, 87, 87)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(dureeProjet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                                    .addComponent(dateFinPrevue, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                                    .addComponent(prixJournee, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                                    .addComponent(nomProjet)))))
                     .addComponent(jButton2)
                     .addComponent(jButton1)
                     .addComponent(validerNouvProjet))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,24 +201,87 @@ public class NouveauProjet extends javax.swing.JFrame {
     private void rechercheClient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercheClient
         Client client = new Client();
         RechercheClient recherche = new RechercheClient(this, true, client);
-        clientSelectionne.setText(String.valueOf(recherche.getClient().getId_client()));
+        recherche.setVisible(true);
+        clientSelectionne.setText(String.valueOf(client.getId_client()));
+        verifBouton();
     }//GEN-LAST:event_rechercheClient
 
     private void valider(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valider
-        Projet projet=new Projet();
-        Client client=new Client();
+        Projet projet = new Projet();
+        Client client = new Client();
         client.setId_client(Integer.parseInt(clientSelectionne.getText()));
         projet.setNom_projet(nomProjet.getText());
         projet.setDuree_projet(Integer.parseInt(dureeProjet.getText()));
         projet.setDate_fin_projet(dateFinPrevue.getText());
         projet.setPrix_journee(Integer.parseInt(prixJournee.getText()));
-        
-        DAOFactory daoFactory= new DAOFactory();
-        DAOProjet daoProjet= daoFactory.getDAOProjet();
-        
-        daoProjet.addProjet(projet,client);
-        
+
+        DAOFactory daoFactory = new DAOFactory();
+        DAOProjet daoProjet = daoFactory.getDAOProjet();
+
+        daoProjet.addProjet(projet, client);
+
     }//GEN-LAST:event_valider
+
+    private void keyTypeDate(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyTypeDate
+        char t = evt.getKeyChar();
+        if (t == KeyEvent.VK_BACK_SPACE && date.length() != 0) {
+            date.deleteCharAt(date.length() - 1);
+        } else {
+            if (date.length() > 9) {
+                evt.consume();
+            }
+            if (date.length() == 2 || date.length() == 5) {
+                if (t == '/') {
+                    date.append(t);
+                } else {
+                    evt.consume();
+                }
+            } else {
+                if (!(Character.isDigit(t))) {
+
+                    evt.consume();
+                } else {
+                    if (date.length() == 0 && Character.getNumericValue(t) > 3) {
+
+                        evt.consume();
+                    } else if (date.length() == 1 && Character.getNumericValue(date.charAt(0)) == 3 && Character.getNumericValue(t) > 1) {
+                        evt.consume();
+                    } else if (date.length() == 1 && Character.getNumericValue(date.charAt(0)) == 0 && Character.getNumericValue(t) == 0) {
+                        evt.consume();
+                    } else if (date.length() == 3 && Character.getNumericValue(t) > 1) {
+                        evt.consume();
+                    } else if (date.length() == 4 && ((Character.getNumericValue(date.charAt(3)) == 1 && Character.getNumericValue(t) > 2) || (Character.getNumericValue(date.charAt(3)) == 0 && Character.getNumericValue(t) == 0))) {
+                        evt.consume();
+                    } else {
+                        date.append(t);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_keyTypeDate
+
+    private void activerBouton1(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_activerBouton1
+        verifBouton();
+    }//GEN-LAST:event_activerBouton1
+
+    private void activerBouton2(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_activerBouton2
+        verifBouton();
+    }//GEN-LAST:event_activerBouton2
+
+    private void activerBouton3(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_activerBouton3
+        verifBouton();
+    }//GEN-LAST:event_activerBouton3
+
+    private void activerBouton4(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_activerBouton4
+        verifBouton();
+    }//GEN-LAST:event_activerBouton4
+    private void verifBouton() {
+        if ((!nomProjet.getText().isEmpty() && !dateFinPrevue.getText().isEmpty()
+                && !dureeProjet.getText().isEmpty() && !prixJournee.getText().isEmpty()
+                && !clientSelectionne.getText().isEmpty())) {
+            validerNouvProjet.setEnabled(true);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -233,5 +334,4 @@ public class NouveauProjet extends javax.swing.JFrame {
     private javax.swing.JTextField prixJournee;
     private javax.swing.JButton validerNouvProjet;
     // End of variables declaration//GEN-END:variables
-
 }

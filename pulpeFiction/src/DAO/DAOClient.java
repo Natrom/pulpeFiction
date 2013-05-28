@@ -76,9 +76,29 @@ public class DAOClient {
                     myVector2D.add(line);
                 
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            throw new dao.DAOException(e.getSQLState());
         }
 
         return myVector2D;
+    }
+    
+    public Client getUnClient(int idCli){
+        Client client=new Client();
+        try {
+            Connection connection = factory.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result=statement.executeQuery("SELECT * FROM Client Where idClient="+idCli+";");
+            while(result.next()){
+                client.setAdresse_client(result.getString("adresseClient"));
+                client.setId_client(result.getInt("idClient"));
+                client.setNom_client(result.getString("nomClient"));
+                client.setNom_contact(result.getString("contactClient"));
+                client.setTelephone_client(result.getInt("telClient"));   
+            }
+        } catch (SQLException e) {
+            throw new dao.DAOException(e.getSQLState());
+        }
+        return client;
     }
 }

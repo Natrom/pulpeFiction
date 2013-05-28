@@ -16,24 +16,14 @@ import javax.swing.table.DefaultTableModel;
  * @author root
  */
 public class RechercheClient extends javax.swing.JDialog {
-Client client;
 
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
     /**
      * Creates new form RechercheClient
      */
     public RechercheClient(java.awt.Frame parent, boolean modal, Client client) {
         super(parent, modal);
-        this.client = new Client();
         initComponents();
-        setVisible(true);
-        client = client;
+        this.client = client;
     }
 
     /**
@@ -207,9 +197,9 @@ Client client;
         afficheClientSelectionne.setText(nomClientSelectionne);
         afficheIdDuClientSelectionne.setText(idClientSelectionne);
         //client.setId_client((int) affichageRechercheClient.getValueAt(ligneSelectionne, 0));
-        System.out.println("coco");
-        client.setId_client(3);
-        System.out.println("tata");
+
+        client.setId_client(Integer.parseInt(idClientSelectionne));
+
 
     }//GEN-LAST:event_selectionClient
 
@@ -231,5 +221,5 @@ Client client;
     private javax.swing.JTextField numClientRecherche;
     public javax.swing.JButton valide;
     // End of variables declaration//GEN-END:variables
-
+    Client client;
 }

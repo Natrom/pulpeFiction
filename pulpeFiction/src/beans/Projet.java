@@ -9,12 +9,31 @@ package beans;
  * @author xavix
  */
 public class Projet {
+
     private int id_projet;
     private int id_convention;
     private String nom_projet;
     private int duree_projet;
     private String date_fin_projet;
     private int prix_journee;
+    private Etudiant responsable;
+    private Client client;
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Etudiant getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(Etudiant responsable) {
+        this.responsable = responsable;
+    }
 
     public int getId_projet() {
         return id_projet;
@@ -63,6 +82,4 @@ public class Projet {
     public void setPrix_journee(int prix_journee) {
         this.prix_journee = prix_journee;
     }
-    
-    
 }

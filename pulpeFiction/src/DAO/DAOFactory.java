@@ -56,4 +56,8 @@ public class DAOFactory {
     public DAOProjet getDAOProjet() {
       return new DAOProjet(this);
     }
+    
+    public DAOEtudiant getDAOEtudiant() {
+      return new DAOEtudiant(this);
+    }
 }

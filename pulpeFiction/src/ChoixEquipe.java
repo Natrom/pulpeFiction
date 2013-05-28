@@ -1,11 +1,17 @@
 
-import javax.swing.JOptionPane;
+import DAO.DAOEtudiant;
+import DAO.DAOFactory;
+import DAO.DAOProjet;
+import com.mysql.jdbc.RowData;
+import java.util.Vector;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author p1207333
@@ -17,6 +23,14 @@ public class ChoixEquipe extends javax.swing.JFrame {
      */
     public ChoixEquipe() {
         initComponents();
+        DAOFactory dAOFactory = new DAOFactory();
+        DAOEtudiant daoEtudiant = dAOFactory.getDAOEtudiant();
+        Vector v = new Vector<>();
+        Vector titres = new Vector();
+        titres.add("Numero etudiant");
+        titres.add("Nom Etudiant");
+        tableEtudiant.setModel(new DefaultTableModel(daoEtudiant.getVectorEtudiant(), titres));
+        tableEtudiantSelectionner.setModel(new DefaultTableModel(v, titres));
     }
 
     /**
@@ -28,61 +42,44 @@ public class ChoixEquipe extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jListEquipe = new javax.swing.JList();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jListEtudiant = new javax.swing.JList();
         responsableProjet = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jListNumProjetEquipe = new javax.swing.JList();
-        validerChoixEquipe = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listeDeProjet = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        rechercheProjetT = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        idProjetSelec = new javax.swing.JLabel();
+        boutonRecherche = new javax.swing.JButton();
+        nomProjetSelec = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tableEtudiantSelectionner = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tableEtudiant = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Equipe Projet");
 
-        jLabel1.setText("Choix de l'Equipe :");
-
-        jListEquipe.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jListEquipe);
-
-        jLabel2.setText("Choix du Responsable :");
-
-        jLabel3.setText("Numero du Projet :");
-
-        jListEtudiant.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(jListEtudiant);
-
         responsableProjet.setBackground(new java.awt.Color(255, 255, 51));
 
         jButton1.setText("►");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajouteEtudiant(evt);
+            }
+        });
 
         jButton2.setText("◄");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retirerEtudiant(evt);
+            }
+        });
 
         jButton3.setText("▼");
-
-        jListNumProjetEquipe.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(jListNumProjetEquipe);
-
-        validerChoixEquipe.setText("Valider");
 
         jButton4.setText("Retour");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -91,81 +88,220 @@ public class ChoixEquipe extends javax.swing.JFrame {
             }
         });
 
+        listeDeProjet.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        listeDeProjet.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                afficheClientSelectionne(evt);
+            }
+        });
+        jScrollPane3.setViewportView(listeDeProjet);
+
+        jLabel4.setText("Recherche du Projet : ");
+
+        jLabel1.setText("Projet Selectionné :");
+
+        boutonRecherche.setText("recherche");
+        boutonRecherche.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rechercheProjet(evt);
+            }
+        });
+
+        tableEtudiantSelectionner.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ));
+        jScrollPane4.setViewportView(tableEtudiantSelectionner);
+
+        tableEtudiant.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ));
+        jScrollPane5.setViewportView(tableEtudiant);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(responsableProjet, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(validerChoixEquipe))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jButton1)
-                                            .addComponent(jButton2))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton3)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(responsableProjet, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(84, 84, 84))
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rechercheProjetT, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(boutonRecherche))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(idProjetSelec, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton1)
+                                    .addComponent(jButton2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addComponent(jButton3)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nomProjetSelec, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton4)))
+                .addGap(484, 484, 484))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(rechercheProjetT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(boutonRecherche))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
+                    .addComponent(idProjetSelec, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(121, 121, 121)
+                        .addComponent(nomProjetSelec, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(responsableProjet, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(47, 47, 47)
                                 .addComponent(jButton2)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(responsableProjet, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(validerChoixEquipe)
-                        .addComponent(jButton4)))
-                .addContainerGap())
+                        .addGap(17, 17, 17)
+                        .addComponent(jButton4)
+                        .addContainerGap(267, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void retourMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourMenu
-        
-            this.dispose();
+
+        this.dispose();
     }//GEN-LAST:event_retourMenu
+
+    private void rechercheProjet(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercheProjet
+        String nomProjetRecep = rechercheProjetT.getText();
+        if (!nomProjetRecep.isEmpty()) {
+            DAOFactory daofactory = new DAOFactory();
+            DAOProjet daoProjet = daofactory.getDAOProjet();
+            Vector liste = new Vector();
+            liste = daoProjet.getRechercheProjet(nomProjetRecep);
+            Vector titres = new Vector();
+            titres.add("Numéro de projet");
+            titres.add("Nom du projet");
+            titres.add("Date fin projet");
+            titres.add("Duree projet");
+            titres.add("Prix journée");
+
+            listeDeProjet.setModel(new DefaultTableModel(
+                    liste,
+                    titres));
+        }
+
+
+    }//GEN-LAST:event_rechercheProjet
+
+    private void afficheClientSelectionne(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_afficheClientSelectionne
+        int ligneSelectionne = listeDeProjet.getSelectedRow();
+        String idProjetSelectionne = (String) listeDeProjet.getValueAt(ligneSelectionne, 0);
+        String nomProjetSelectionne = (String) listeDeProjet.getValueAt(ligneSelectionne, 1);
+        idProjetSelec.setText(idProjetSelectionne);
+        nomProjetSelec.setText(nomProjetSelectionne);
+    }//GEN-LAST:event_afficheClientSelectionne
+
+    private void ajouteEtudiant(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouteEtudiant
+        
+        int ligneSelectionne = tableEtudiant.getSelectedRow();
+        Vector v=new Vector();
+        String nomEtudiant = (String) tableEtudiant.getValueAt(ligneSelectionne, 1);
+        int idEtudiant =  (int) tableEtudiant.getValueAt(ligneSelectionne, 0);
+        v.add(idEtudiant);
+        v.add(nomEtudiant);
+        DefaultTableModel model= (DefaultTableModel) tableEtudiantSelectionner.getModel();  
+        model.addRow(v);
+        tableEtudiantSelectionner.setModel(model);
+        
+        DefaultTableModel model1= (DefaultTableModel) tableEtudiant.getModel();
+        model1.removeRow(ligneSelectionne);
+        tableEtudiant.setModel(model1);
+        
+        
+    }//GEN-LAST:event_ajouteEtudiant
+
+    private void retirerEtudiant(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retirerEtudiant
+        int ligneSelectionne = tableEtudiantSelectionner.getSelectedRow();
+        Vector v=new Vector();
+        String nomEtudiant = (String) tableEtudiantSelectionner.getValueAt(ligneSelectionne, 1);
+        int idEtudiant =  (int) tableEtudiantSelectionner.getValueAt(ligneSelectionne, 0);
+        v.add(idEtudiant);
+        v.add(nomEtudiant);
+        
+        DefaultTableModel model= (DefaultTableModel) tableEtudiant.getModel();  
+        model.addRow(v);
+        tableEtudiant.setModel(model);
+        
+        DefaultTableModel model1= (DefaultTableModel) tableEtudiantSelectionner.getModel();
+        model1.removeRow(ligneSelectionne);
+        tableEtudiantSelectionner.setModel(model1);
+        
+    }//GEN-LAST:event_retirerEtudiant
 
     /**
      * @param args the command line arguments
@@ -202,20 +338,22 @@ public class ChoixEquipe extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton boutonRecherche;
+    private javax.swing.JLabel idProjetSelec;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JList jListEquipe;
-    private javax.swing.JList jListEtudiant;
-    private javax.swing.JList jListNumProjetEquipe;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTable listeDeProjet;
+    private javax.swing.JLabel nomProjetSelec;
+    private javax.swing.JTextField rechercheProjetT;
     private javax.swing.JLabel responsableProjet;
-    private javax.swing.JButton validerChoixEquipe;
+    private javax.swing.JTable tableEtudiant;
+    private javax.swing.JTable tableEtudiantSelectionner;
     // End of variables declaration//GEN-END:variables
 }

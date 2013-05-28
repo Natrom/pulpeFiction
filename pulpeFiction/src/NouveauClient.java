@@ -46,9 +46,9 @@ public class NouveauClient extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Création Client");
 
-        nomClient.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nomClientActionPerformed(evt);
+        nomClient.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                activerBouton(evt);
             }
         });
 
@@ -56,17 +56,22 @@ public class NouveauClient extends javax.swing.JFrame {
 
         jLabel2.setText("Adresse :");
 
-        adresseClient.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adresseClientActionPerformed(evt);
+        adresseClient.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                activerBouton1(evt);
             }
         });
 
         jLabel3.setText("Téléphone :");
 
-        telephoneClient.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                telephoneClientActionPerformed(evt);
+        telephoneClient.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                activerBouton2(evt);
+            }
+        });
+        telephoneClient.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                keyListenreTel(evt);
             }
         });
 
@@ -74,13 +79,14 @@ public class NouveauClient extends javax.swing.JFrame {
 
         jLabel6.setText("Contact :");
 
-        contactClient.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                contactClientActionPerformed(evt);
+        contactClient.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                activerBouton3(evt);
             }
         });
 
         validerNouvClient.setText("Valider");
+        validerNouvClient.setEnabled(false);
         validerNouvClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 validerCreationClient(evt);
@@ -164,22 +170,6 @@ public class NouveauClient extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nomClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomClientActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nomClientActionPerformed
-
-    private void adresseClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adresseClientActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_adresseClientActionPerformed
-
-    private void telephoneClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telephoneClientActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_telephoneClientActionPerformed
-
-    private void contactClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactClientActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_contactClientActionPerformed
-
     private void clicAnnulerNC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clicAnnulerNC
         JOptionPane res = null;
         int option = res.showConfirmDialog(null,
@@ -206,6 +196,35 @@ public class NouveauClient extends javax.swing.JFrame {
         daoClient.addClient(client);
     }//GEN-LAST:event_validerCreationClient
 
+    private void keyListenreTel(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyListenreTel
+        char t = evt.getKeyChar();
+        if(!Character.isDigit(t)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_keyListenreTel
+
+    private void activerBouton(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_activerBouton
+       verifBouton();
+    }//GEN-LAST:event_activerBouton
+
+    private void activerBouton1(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_activerBouton1
+        verifBouton();
+    }//GEN-LAST:event_activerBouton1
+
+    private void activerBouton2(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_activerBouton2
+        verifBouton();
+    }//GEN-LAST:event_activerBouton2
+
+    private void activerBouton3(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_activerBouton3
+        verifBouton();
+    }//GEN-LAST:event_activerBouton3
+
+    private void verifBouton(){
+        if((!nomClient.getText().isEmpty()&& !adresseClient.getText().isEmpty()
+                &&!telephoneClient.getText().isEmpty()&&!contactClient.getText().isEmpty())){
+            validerNouvClient.setEnabled(true);
+        }
+    }
     /**
      * @param args the command line arguments
      */
