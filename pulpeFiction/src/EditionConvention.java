@@ -1,19 +1,38 @@
+
+import DAO.DAOFactory;
+import DAO.DAOParticipe;
+import DAO.DAOProjet;
+import beans.Client;
+import beans.Projet;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author p1207333
  */
 public class EditionConvention extends javax.swing.JFrame {
 
+    Client client;
+    Projet projet;
+    DAOFactory daoFactory;
+    DAOProjet daoProjet;
+    DAOParticipe dAOParticipe;
+
     /**
      * Creates new form EditionConvention
      */
     public EditionConvention() {
         initComponents();
+        client = new Client();
+        projet = new Projet();
+        daoFactory = new DAOFactory();
+        daoProjet = daoFactory.getDAOProjet();
+        dAOParticipe=daoFactory.getDAOParticipe();
     }
 
     /**
@@ -28,8 +47,6 @@ public class EditionConvention extends javax.swing.JFrame {
         selectionClient = new javax.swing.JButton();
         editionConvNomClient = new javax.swing.JLabel();
         editionConvNumClient = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
         jLabel3 = new javax.swing.JLabel();
         editionConvProjetSelectionne = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -38,22 +55,23 @@ public class EditionConvention extends javax.swing.JFrame {
         editionConvAfficheNumConv = new javax.swing.JLabel();
         imprimerConvention = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableAfficheProjet = new javax.swing.JTable();
+        equipe = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Edition Convention");
 
         selectionClient.setText("Selection du client");
+        selectionClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectionClient(evt);
+            }
+        });
 
         editionConvNomClient.setText("LABEL NOM CLIENT");
 
         editionConvNumClient.setText("LABEL ID CLIENT");
-
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
 
         jLabel3.setText("Projets du client :");
 
@@ -62,12 +80,19 @@ public class EditionConvention extends javax.swing.JFrame {
         jLabel5.setText("Projet selectionné :");
 
         validerEditionConv.setText("Valider Convention");
+        validerEditionConv.setEnabled(false);
+        validerEditionConv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boutonValiderConvention(evt);
+            }
+        });
 
         jLabel1.setText("Numero de convention :");
 
         editionConvAfficheNumConv.setText("LABEL NUMERO CONVENTION");
 
         imprimerConvention.setText("Impression Convetion");
+        imprimerConvention.setEnabled(false);
 
         jButton1.setText("Retour ");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -76,6 +101,24 @@ public class EditionConvention extends javax.swing.JFrame {
             }
         });
 
+        tableAfficheProjet.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tableAfficheProjet.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                selectionProjet(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tableAfficheProjet);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -83,27 +126,33 @@ public class EditionConvention extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(selectionClient)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5))
+                        .addComponent(jLabel5)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(editionConvProjetSelectionne, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(selectionClient)
+                                    .addComponent(jLabel3))
+                                .addGap(18, 18, 18)
                                 .addComponent(editionConvNomClient, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(editionConvNumClient, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(editionConvProjetSelectionne, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1)))
-                    .addComponent(validerEditionConv)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(editionConvAfficheNumConv))
-                    .addComponent(imprimerConvention)
-                    .addComponent(jButton1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(356, 356, 356)
+                                .addComponent(jButton1))
+                            .addComponent(validerEditionConv)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(editionConvAfficheNumConv))
+                            .addComponent(imprimerConvention))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(equipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,10 +163,12 @@ public class EditionConvention extends javax.swing.JFrame {
                     .addComponent(editionConvNomClient)
                     .addComponent(editionConvNumClient))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(equipe, javax.swing.GroupLayout.DEFAULT_SIZE, 12, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editionConvProjetSelectionne)
                     .addComponent(jLabel5))
@@ -129,7 +180,7 @@ public class EditionConvention extends javax.swing.JFrame {
                     .addComponent(editionConvAfficheNumConv))
                 .addGap(18, 18, 18)
                 .addComponent(imprimerConvention)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -140,6 +191,89 @@ public class EditionConvention extends javax.swing.JFrame {
     private void retourMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourMenu
         this.dispose();
     }//GEN-LAST:event_retourMenu
+
+    private void selectionClient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectionClient
+        RechercheClient recherche = new RechercheClient(this, true, client);
+        recherche.setVisible(true);
+        projet.setClient(client);
+        editionConvNumClient.setText(String.valueOf(client.getId_client()));
+        editionConvNomClient.setText(String.valueOf(client.getNom_client()));
+
+        Vector vector = new Vector();
+        vector = daoProjet.getProjetClientConsultation(client);
+
+        Vector columnNames = new Vector();
+        columnNames.add("numéro de projet");
+        columnNames.add("Numéro de client");
+        columnNames.add("Numéro de l'étudiant responsable");
+        columnNames.add("Numéro de convention");
+        columnNames.add("Nom du Projet");
+        columnNames.add("Durée du projet");
+        columnNames.add("Date de fin prévue");
+        columnNames.add("prix journée");
+        columnNames.add("Cout total du Projet");
+        
+        
+        
+
+        tableAfficheProjet.setModel(new DefaultTableModel(vector, columnNames));
+
+    }//GEN-LAST:event_selectionClient
+
+    private void selectionProjet(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectionProjet
+        int ligneSelectionnee = tableAfficheProjet.getSelectedRow();
+        int idProjet = (int) tableAfficheProjet.getValueAt(ligneSelectionnee, 0);
+        projet.setId_projet(idProjet);
+        dAOParticipe.equipeDansProjet(projet);
+        Integer idconvention = (Integer) tableAfficheProjet.getValueAt(ligneSelectionnee, 3);
+        editionConvProjetSelectionne.setText(String.valueOf(idProjet));
+        
+        if(projet.getEquipe()){
+            equipe.setText("Equipe selectionnée");
+        }else{
+            equipe.setText("Vous devez choisir une equipe avent la validation de convention");
+        }
+        if (idconvention == 0 && projet.getEquipe()) {
+            validerEditionConv.setEnabled(true);
+
+        } else {
+            editionConvAfficheNumConv.setText(String.valueOf(idconvention));
+            validerEditionConv.setEnabled(false);
+        }
+        
+        
+        if (idconvention>0&& projet.getEquipe()) {
+            imprimerConvention.setEnabled(true);
+        } else {
+            imprimerConvention.setEnabled(false);
+        }
+
+    }//GEN-LAST:event_selectionProjet
+
+    private void boutonValiderConvention(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonValiderConvention
+
+        daoProjet.setConvention(projet);
+        Vector vector = new Vector();
+        vector = daoProjet.getProjetClientConsultation(client);
+
+        Vector columnNames = new Vector();
+        columnNames.add("numéro de projet");
+        columnNames.add("Numéro de client");
+        columnNames.add("Numéro de l'étudiant responsable");
+        columnNames.add("Numéro de convention");
+        columnNames.add("Nom du Projet");
+        columnNames.add("Durée du projet");
+        columnNames.add("Date de fin prévue");
+        columnNames.add("prix journée");
+        columnNames.add("Cout total du Projet");
+
+        tableAfficheProjet.setModel(new DefaultTableModel(vector, columnNames));
+        editionConvAfficheNumConv.setText(String.valueOf(projet.getId_convention()));
+        validerEditionConv.setEnabled(false);
+        imprimerConvention.setEnabled(true);
+
+
+    }//GEN-LAST:event_boutonValiderConvention
 
     /**
      * @param args the command line arguments
@@ -180,14 +314,15 @@ public class EditionConvention extends javax.swing.JFrame {
     private javax.swing.JLabel editionConvNomClient;
     private javax.swing.JLabel editionConvNumClient;
     private javax.swing.JLabel editionConvProjetSelectionne;
+    private javax.swing.JLabel equipe;
     private javax.swing.JButton imprimerConvention;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JList jList1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton selectionClient;
+    private javax.swing.JTable tableAfficheProjet;
     private javax.swing.JButton validerEditionConv;
     // End of variables declaration//GEN-END:variables
 }

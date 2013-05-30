@@ -1,7 +1,11 @@
 
+import DAO.DAOEtudiant;
 import DAO.DAOFactory;
 import DAO.DAOProjet;
 import beans.Client;
+import beans.Projet;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this template, choose Tools | Templates
@@ -14,11 +18,21 @@ import beans.Client;
  */
 public class ConsultationProjet extends javax.swing.JFrame {
 
+    Client client;
+    Projet projet;
+    DAOFactory daoFactory;
+    DAOProjet daoProjet;
+    DAOEtudiant daoEtudiant;
     /**
      * Creates new form ConsultationProjet
      */
     public ConsultationProjet() {
         initComponents();
+        client=new Client();
+        projet=new Projet();
+        daoFactory=new DAOFactory();
+        daoProjet=daoFactory.getDAOProjet();
+        daoEtudiant=daoFactory.getDAOEtudiant();
     }
 
     /**
@@ -34,12 +48,12 @@ public class ConsultationProjet extends javax.swing.JFrame {
         consultNomClient = new javax.swing.JLabel();
         consultNumClient = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listNomProjetDuClient = new javax.swing.JList();
         jButtonRetourMenu = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableAfficheProjet = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableEtudiantProjet = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Consultation Projet");
@@ -57,13 +71,6 @@ public class ConsultationProjet extends javax.swing.JFrame {
 
         jLabel3.setText("Projets du client :");
 
-        listNomProjetDuClient.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(listNomProjetDuClient);
-
         jButtonRetourMenu.setText("Retour Menu");
         jButtonRetourMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,15 +85,41 @@ public class ConsultationProjet extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableAfficheProjet.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "numéro de projet", "numéro de client", "Title 3", "Title 4"
+            }
+        ));
+        tableAfficheProjet.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                afficheEtudiantProjet(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tableAfficheProjet);
+
+        tableEtudiantProjet.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(jTable1);
+        tableEtudiantProjet.setEnabled(false);
+        jScrollPane1.setViewportView(tableEtudiantProjet);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,19 +133,18 @@ public class ConsultationProjet extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(consultNomClient, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(consultNumClient, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 445, Short.MAX_VALUE))
+                        .addComponent(consultNumClient, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jButton1))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(458, 458, 458)
                                 .addComponent(jButtonRetourMenu)
-                                .addGap(64, 64, 64))
+                                .addGap(0, 198, Short.MAX_VALUE))
+                            .addComponent(jScrollPane3)
                             .addComponent(jScrollPane1))))
                 .addContainerGap())
         );
@@ -126,11 +158,11 @@ public class ConsultationProjet extends javax.swing.JFrame {
                     .addComponent(consultNumClient))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 347, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonRetourMenu)
                     .addComponent(jButton1))
@@ -146,16 +178,44 @@ public class ConsultationProjet extends javax.swing.JFrame {
 
     private void boutonSelectionClient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonSelectionClient
         
-        Client client = new Client();
-        DAOFactory daoFactory=new DAOFactory();
-        DAOProjet daoProjet=daoFactory.getDAOProjet();
+        
         RechercheClient recherche = new RechercheClient(this, true, client);
         recherche.setVisible(true);
         consultNumClient.setText(String.valueOf(client.getId_client()));
         consultNomClient.setText(String.valueOf(client.getNom_client()));
         
-        listNomProjetDuClient.setListData(daoProjet.getNomProjetParClient(client.getId_client()));
+        Vector vector=new Vector();
+        vector=daoProjet.getProjetClientConsultation(client);
+        
+        Vector columnNames = new Vector();
+        columnNames.add("numéro de projet");
+        columnNames.add("Numéro de client");
+        columnNames.add("Numéro de l'étudiant responsable");
+        columnNames.add("Numéro de convention");
+        columnNames.add("Nom du Projet");
+        columnNames.add("Durée du projet");
+        columnNames.add("Date de fin prévue");
+        columnNames.add("prix journée");
+        columnNames.add("Cout total du Projet");
+        
+        tableAfficheProjet.setModel(new DefaultTableModel(vector,columnNames));
     }//GEN-LAST:event_boutonSelectionClient
+
+    private void afficheEtudiantProjet(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_afficheEtudiantProjet
+        int ligneSelectionnee=tableAfficheProjet.getSelectedRow();
+        projet.setClient(client);
+        projet.setId_projet((int) tableAfficheProjet.getValueAt(ligneSelectionnee, 0));
+        
+        
+        Vector columnNames = new Vector();
+        columnNames.add("numéro Etudiant");
+        columnNames.add("Nom Etudiant");
+        columnNames.add("Prenom Etudiant");
+        columnNames.add("Date naissance");
+        columnNames.add("Adresse");
+        
+        tableEtudiantProjet.setModel(new DefaultTableModel(daoEtudiant.getVectorEtudiant(),columnNames));
+    }//GEN-LAST:event_afficheEtudiantProjet
 
     /**
      * @param args the command line arguments
@@ -200,7 +260,7 @@ public class ConsultationProjet extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JList listNomProjetDuClient;
+    private javax.swing.JTable tableAfficheProjet;
+    private javax.swing.JTable tableEtudiantProjet;
     // End of variables declaration//GEN-END:variables
 }

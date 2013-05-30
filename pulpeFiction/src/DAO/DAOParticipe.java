@@ -4,7 +4,9 @@
  */
 package DAO;
 
+import beans.Projet;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -35,19 +37,39 @@ public class DAOParticipe {
             Vector v = new Vector();
             Iterator it2;
             Iterator it1 = listeEtudiant.iterator();
+            
             while (it1.hasNext()) {
+                
                 v = (Vector) it1.next();
                 idE = (int) v.get(0);
 
+                String requete = "INSERT INTO `Participe` (`idProjet`, `idEtudiant`) VALUES (" + idP + ", " + idE + ");";
+                statement.executeUpdate(requete);
+                
             }
-String requete="INSERT INTO `Participe` (`idProjet`, `idEtudiant`) VALUES (" + idP + ", " + idE + ");";
-            statement.executeUpdate(requete);
+
             /* Fermeture des ressources */
 
             statement.close();
             connection.close();
         } catch (SQLException e) {
-            throw new dao.DAOException(e.getSQLState());
+            throw new DAO.DAOException(e.getSQLState());
+        }
+    }
+
+    public void equipeDansProjet(Projet projet) {
+
+        try {
+            Connection connection = factory.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * from Participe where idProjet=" + projet.getId_projet() + ";");
+            resultSet.next();
+            if(resultSet.next()){
+                projet.setEquipe(true);
+            }else{
+                projet.setEquipe(false);
+            }
+        } catch (Exception e) {
         }
     }
 }

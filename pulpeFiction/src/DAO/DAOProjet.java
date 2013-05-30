@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.Vector;
 
 /**
@@ -36,7 +37,7 @@ public class DAOProjet {
             statement.close();
             connection.close();
         } catch (SQLException e) {
-            throw new dao.DAOException(e.getSQLState());
+            throw new DAO.DAOException(e.getSQLState());
         }
     }
 
@@ -72,11 +73,11 @@ public class DAOProjet {
                 listeProjet.add(projet);
             }
         } catch (SQLException e) {
-            throw new dao.DAOException(e.getSQLState());
+            throw new DAO.DAOException(e.getSQLState());
         }
     }
 
-    public Vector getNomProjetParClient(int idClient) {
+    public Vector getProjetParClient(int idClient) {
         Vector vector = new Vector<>();
         try {
 
@@ -89,9 +90,48 @@ public class DAOProjet {
                 vector.add(result.getString("nomProjet"));
             }
         } catch (SQLException e) {
-            throw new dao.DAOException(e.getSQLState());
+            throw new DAO.DAOException(e.getSQLState());
         }
         return vector;
+    }
+
+    public Vector getProjetClientConsultation(Client client) {
+        Vector vector2D = new Vector<>();
+        try {
+
+            Connection connection = factory.getConnection();
+            Statement statement = connection.createStatement();
+            String requete = "SELECT * FROM Projet where idClient=" + client.getId_client() + ";";
+            System.out.println(requete);
+            ResultSet result = statement.executeQuery(requete);
+            int coutTotal;
+            int nombre_de_semaine;
+            int cout_jounrnee;
+            while (result.next()) {
+                Vector vector1D = new Vector<>();
+                vector1D.add(result.getInt("idProjet"));
+                vector1D.add(result.getInt("idClient"));
+                vector1D.add(result.getInt("idEtudiantResponsable"));
+                vector1D.add(result.getInt("idConvention"));
+                vector1D.add(result.getString("nomProjet"));
+
+                nombre_de_semaine = result.getInt("dureeProjet");
+                vector1D.add(nombre_de_semaine);
+
+                vector1D.add(result.getString("dateFinProjet"));
+
+                cout_jounrnee = result.getInt("prixJournee");
+                vector1D.add(cout_jounrnee);
+
+                coutTotal = 5 * nombre_de_semaine * cout_jounrnee;
+                vector1D.add(coutTotal);
+
+                vector2D.add(vector1D);
+            }
+        } catch (SQLException e) {
+            throw new DAO.DAOException(e.getSQLState());
+        }
+        return vector2D;
     }
 
     public Vector getProjetParClient(String idClient) {
@@ -114,7 +154,7 @@ public class DAOProjet {
                 vector2D.add(vector1D);
             }
         } catch (SQLException e) {
-            throw new dao.DAOException(e.getSQLState());
+            throw new DAO.DAOException(e.getSQLState());
         }
         return vector2D;
     }
@@ -138,7 +178,7 @@ public class DAOProjet {
                 vector2D.add(vector1D);
             }
         } catch (SQLException e) {
-            throw new dao.DAOException(e.getSQLState());
+            throw new DAO.DAOException(e.getSQLState());
         }
         return vector2D;
     }
@@ -155,7 +195,27 @@ public class DAOProjet {
             statement.close();
             connection.close();
         } catch (SQLException e) {
-            throw new dao.DAOException(e.getSQLState());
+            throw new DAO.DAOException(e.getSQLState());
+        }
+    }
+
+    public void setConvention(Projet projet) {
+        try {
+            Connection connection = factory.getConnection();
+            Statement statement = connection.createStatement();
+            
+            String idClient=String.valueOf(projet.getClient().getId_client());
+            String idProjet=String.valueOf(projet.getId_projet());
+            System.out.println(idProjet);
+            System.out.println(idClient);
+            String numConv=idClient+idProjet;
+            Integer conv=(Integer.parseInt(numConv));
+            
+            statement.executeUpdate("UPDATE `Projet` set `idConvention`= "+conv+" where idProjet="+projet.getId_projet()+";");
+            System.out.println(conv);
+            
+            projet.setId_convention(conv);
+        } catch (Exception e) {
         }
     }
 }

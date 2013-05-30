@@ -6,6 +6,7 @@ package DAO;
 
 
 import beans.Etudiant;
+import beans.Projet;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,7 +41,7 @@ public class DAOEtudiant {
                 listeEtudiant.add(etudiant);
             }
         } catch (SQLException e) {
-            throw new dao.DAOException(e.getSQLState());
+            throw new DAO.DAOException(e.getSQLState());
         }
         return listeEtudiant;
     }
@@ -58,7 +59,7 @@ public class DAOEtudiant {
                 etudiant.setAdresseEtudiant(result.getString("adresseEtudiant"));
             }
         } catch (SQLException e) {
-            throw new dao.DAOException(e.getSQLState());
+            throw new DAO.DAOException(e.getSQLState());
         }
         return etudiant;
     }
@@ -75,9 +76,33 @@ public class DAOEtudiant {
                 listeEtudiant2D.add(listeEtudiant1D);
             }
         } catch (SQLException e) {
-            throw new dao.DAOException(e.getSQLState());
+            throw new DAO.DAOException(e.getSQLState());
         }
         return listeEtudiant2D;
+    }
+    
+    public Vector getEtudiantProjet(Projet projet)
+    {
+        Vector vector2D=new Vector();
+        try {
+            Connection connection = factory.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM Etudiant e join Participe p on e.idEtudiant=p.idEtudiant where idClient="+projet.getClient().getId_client()+" and idProjet="+projet.getId_projet()+";");
+            while (result.next()) {
+                Vector vector1D = new Vector<>();
+                vector1D.add(result.getInt("idEtudiant"));
+                vector1D.add(result.getInt("nomEtudiant"));
+                vector1D.add(result.getString("prenomEtudiant"));
+                vector1D.add(result.getString("dateNaissanceEtudiant"));
+                vector1D.add(result.getShort("adresseEtudiant"));
+                
+                vector2D.add(vector1D);
+            }
+            
+        } catch (Exception e) {
+        }
+        return vector2D;
+        
     }
     
 }

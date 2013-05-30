@@ -18,6 +18,19 @@ public class Projet {
     private int prix_journee;
     private Etudiant responsable;
     private Client client;
+    private boolean equipe;
+
+    public Projet(){
+        equipe=false;
+    }
+    
+    public boolean getEquipe() {
+        return equipe;
+    }
+
+    public void setEquipe(boolean equipe) {
+        this.equipe = equipe;
+    }
 
     public Client getClient() {
         return client;

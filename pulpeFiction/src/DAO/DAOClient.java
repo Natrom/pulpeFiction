@@ -37,7 +37,7 @@ public class DAOClient {
             statement.close();
             connection.close();
         } catch (SQLException e) {
-            throw new dao.DAOException(e.getSQLState());
+            throw new DAO.DAOException(e.getSQLState());
         }
     }
 
@@ -77,7 +77,7 @@ public class DAOClient {
                 
             }
         } catch (SQLException e) {
-            throw new dao.DAOException(e.getSQLState());
+            throw new DAO.DAOException(e.getSQLState());
         }
 
         return myVector2D;
@@ -97,7 +97,7 @@ public class DAOClient {
                 client.setTelephone_client(result.getInt("telClient"));   
             }
         } catch (SQLException e) {
-            throw new dao.DAOException(e.getSQLState());
+            throw new DAO.DAOException(e.getSQLState());
         }
         return client;
     }
