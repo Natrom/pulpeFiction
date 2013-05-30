@@ -60,4 +60,8 @@ public class DAOFactory {
     public DAOEtudiant getDAOEtudiant() {
       return new DAOEtudiant(this);
     }
+    
+    public DAOParticipe getDAOParticipe() {
+      return new DAOParticipe(this);
+    }
 }

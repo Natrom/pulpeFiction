@@ -199,6 +199,7 @@ public class RechercheClient extends javax.swing.JDialog {
         //client.setId_client((int) affichageRechercheClient.getValueAt(ligneSelectionne, 0));
 
         client.setId_client(Integer.parseInt(idClientSelectionne));
+        client.setNom_client(nomClientSelectionne);
 
 
     }//GEN-LAST:event_selectionClient

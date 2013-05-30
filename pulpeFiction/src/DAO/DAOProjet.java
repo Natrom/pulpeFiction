@@ -40,6 +40,11 @@ public class DAOProjet {
         }
     }
 
+    public void getProjetClient() {
+        Vector listeProjet = new Vector<>();
+
+    }
+
     public void getProjet() {
         Vector listeProjet = new Vector<>();
         int idEtu;
@@ -71,17 +76,60 @@ public class DAOProjet {
         }
     }
 
-    public Vector getRechercheProjet(String nomEntre) {
-        Vector vector2D = new Vector<>();
+    public Vector getNomProjetParClient(int idClient) {
+        Vector vector = new Vector<>();
         try {
-            
+
             Connection connection = factory.getConnection();
             Statement statement = connection.createStatement();
-            String requete="SELECT * FROM Projet where nomProjet like \"%"+nomEntre+"%\"";
+            String requete = "SELECT * FROM Projet where idClient=" + idClient + ";";
             System.out.println(requete);
             ResultSet result = statement.executeQuery(requete);
             while (result.next()) {
-                Vector vector1D=new Vector<>();
+                vector.add(result.getString("nomProjet"));
+            }
+        } catch (SQLException e) {
+            throw new dao.DAOException(e.getSQLState());
+        }
+        return vector;
+    }
+
+    public Vector getProjetParClient(String idClient) {
+        Vector vector2D = new Vector<>();
+        try {
+
+            Connection connection = factory.getConnection();
+            Statement statement = connection.createStatement();
+            String requete = "SELECT * FROM Projet where idClient=" + idClient + ";";
+            System.out.println(requete);
+            ResultSet result = statement.executeQuery(requete);
+            while (result.next()) {
+                Vector vector1D = new Vector<>();
+                vector1D.add(result.getInt("idProjet"));
+                vector1D.add(result.getInt("idConvention"));
+                vector1D.add(result.getString("nomProjet"));
+                vector1D.add(result.getString("dateFinProjet"));
+                vector1D.add(result.getShort("dureeProjet"));
+                vector1D.add(result.getInt("prixJournee"));
+                vector2D.add(vector1D);
+            }
+        } catch (SQLException e) {
+            throw new dao.DAOException(e.getSQLState());
+        }
+        return vector2D;
+    }
+
+    public Vector getRechercheProjet(String nomEntre) {
+        Vector vector2D = new Vector<>();
+        try {
+
+            Connection connection = factory.getConnection();
+            Statement statement = connection.createStatement();
+            String requete = "SELECT * FROM Projet where nomProjet like \"%" + nomEntre + "%\"";
+            System.out.println(requete);
+            ResultSet result = statement.executeQuery(requete);
+            while (result.next()) {
+                Vector vector1D = new Vector<>();
                 vector1D.add(result.getInt("idProjet"));
                 vector1D.add(result.getString("nomProjet"));
                 vector1D.add(result.getString("dateFinProjet"));
@@ -93,5 +141,21 @@ public class DAOProjet {
             throw new dao.DAOException(e.getSQLState());
         }
         return vector2D;
+    }
+
+    public void setResponsableProjet(int idResponsable, String idProjet) {
+        try {
+            Connection connection = factory.getConnection();
+            Statement statement = connection.createStatement();
+            int idP = Integer.parseInt(idProjet);
+
+            statement.executeUpdate("UPDATE `Projet` SET `idEtudiantResponsable`=" + idResponsable + " WHERE `idProjet`=" + idP + ";");
+            /* Fermeture des ressources */
+
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            throw new dao.DAOException(e.getSQLState());
+        }
     }
 }
