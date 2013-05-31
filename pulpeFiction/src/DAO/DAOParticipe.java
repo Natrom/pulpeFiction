@@ -64,7 +64,7 @@ public class DAOParticipe {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * from Participe where idProjet=" + projet.getId_projet() + ";");
             resultSet.next();
-            if(resultSet.next()){
+            if(resultSet.first()){
                 projet.setEquipe(true);
             }else{
                 projet.setEquipe(false);

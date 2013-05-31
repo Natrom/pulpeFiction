@@ -87,14 +87,14 @@ public class DAOEtudiant {
         try {
             Connection connection = factory.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM Etudiant e join Participe p on e.idEtudiant=p.idEtudiant where idClient="+projet.getClient().getId_client()+" and idProjet="+projet.getId_projet()+";");
+            ResultSet result = statement.executeQuery("SELECT * FROM Etudiant e join Participe p on e.idEtudiant=p.idEtudiant where idProjet="+projet.getId_projet()+";");
             while (result.next()) {
                 Vector vector1D = new Vector<>();
                 vector1D.add(result.getInt("idEtudiant"));
-                vector1D.add(result.getInt("nomEtudiant"));
+                vector1D.add(result.getString("nomEtudiant"));
                 vector1D.add(result.getString("prenomEtudiant"));
                 vector1D.add(result.getString("dateNaissanceEtudiant"));
-                vector1D.add(result.getShort("adresseEtudiant"));
+                vector1D.add(result.getString("adresseEtudiant"));
                 
                 vector2D.add(vector1D);
             }

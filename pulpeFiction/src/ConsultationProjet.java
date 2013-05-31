@@ -204,7 +204,8 @@ public class ConsultationProjet extends javax.swing.JFrame {
     private void afficheEtudiantProjet(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_afficheEtudiantProjet
         int ligneSelectionnee=tableAfficheProjet.getSelectedRow();
         projet.setClient(client);
-        projet.setId_projet((int) tableAfficheProjet.getValueAt(ligneSelectionnee, 0));
+        int idprojet=(Integer) tableAfficheProjet.getValueAt(ligneSelectionnee, 0);
+        projet.setId_projet(idprojet);
         
         
         Vector columnNames = new Vector();
@@ -214,7 +215,7 @@ public class ConsultationProjet extends javax.swing.JFrame {
         columnNames.add("Date naissance");
         columnNames.add("Adresse");
         
-        tableEtudiantProjet.setModel(new DefaultTableModel(daoEtudiant.getVectorEtudiant(),columnNames));
+        tableEtudiantProjet.setModel(new DefaultTableModel(daoEtudiant.getEtudiantProjet(projet),columnNames));
     }//GEN-LAST:event_afficheEtudiantProjet
 
     /**

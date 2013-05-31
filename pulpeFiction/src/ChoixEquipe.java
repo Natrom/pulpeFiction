@@ -4,6 +4,7 @@ import DAO.DAOFactory;
 import DAO.DAOParticipe;
 import DAO.DAOProjet;
 import beans.Participe;
+import beans.Projet;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -18,6 +19,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ChoixEquipe extends javax.swing.JFrame {
 
+    DAOParticipe dAOParticipe;
+    Projet projet;
+
     /**
      * Creates new form ChoixEquipe
      */
@@ -25,12 +29,17 @@ public class ChoixEquipe extends javax.swing.JFrame {
         initComponents();
         DAOFactory dAOFactory = new DAOFactory();
         DAOEtudiant daoEtudiant = dAOFactory.getDAOEtudiant();
+        dAOParticipe = dAOFactory.getDAOParticipe();
+        projet=new Projet();
         Vector v = new Vector<>();
         Vector titres = new Vector();
         titres.add("Numero etudiant");
         titres.add("Nom Etudiant");
         tableEtudiant.setModel(new DefaultTableModel(daoEtudiant.getVectorEtudiant(), titres));
         tableEtudiantSelectionner.setModel(new DefaultTableModel(v, titres));
+        jButton1.setEnabled(false);
+        jButton2.setEnabled(false);
+        jButton3.setEnabled(false);
     }
 
     /**
@@ -53,7 +62,6 @@ public class ChoixEquipe extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         idProjetSelec = new javax.swing.JLabel();
         boutonRecherche = new javax.swing.JButton();
-        nomProjetSelec = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tableEtudiantSelectionner = new javax.swing.JTable();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -177,8 +185,8 @@ public class ChoixEquipe extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(idProjetSelec, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(idProjetSelec, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton1)
@@ -188,9 +196,7 @@ public class ChoixEquipe extends javax.swing.JFrame {
                                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(12, 12, 12)
-                                        .addComponent(jButton3)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nomProjetSelec, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addComponent(jButton3))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,7 +223,7 @@ public class ChoixEquipe extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nomResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(idResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(211, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,34 +239,28 @@ public class ChoixEquipe extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(idProjetSelec, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(47, 47, 47)
-                                .addComponent(jButton2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nomResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(idResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton4)
-                            .addComponent(validerChoixEquipe)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(nomProjetSelec, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(jButton1)
+                        .addGap(47, 47, 47)
+                        .addComponent(jButton2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nomResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(idResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(validerChoixEquipe)))
         );
 
         pack();
@@ -298,78 +298,88 @@ public class ChoixEquipe extends javax.swing.JFrame {
         String idProjetSelectionne = listeDeProjet.getValueAt(ligneSelectionne, 0).toString();
         String nomProjetSelectionne = (String) listeDeProjet.getValueAt(ligneSelectionne, 1);
         idProjetSelec.setText(idProjetSelectionne);
-        nomProjetSelec.setText(nomProjetSelectionne);
+        projet.setId_projet(Integer.parseInt(idProjetSelectionne));
+        dAOParticipe.equipeDansProjet(projet);
+        if(projet.getEquipe()==true){
+            jButton1.setEnabled(false);
+            jButton2.setEnabled(false);
+            jButton3.setEnabled(false);
+        }else{
+            jButton1.setEnabled(true);
+            jButton2.setEnabled(true);
+            jButton3.setEnabled(true);
+        }
     }//GEN-LAST:event_afficheClientSelectionne
 
     private void ajouteEtudiant(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouteEtudiant
-        
+
         int ligneSelectionne = tableEtudiant.getSelectedRow();
-        Vector v=new Vector();
+        Vector v = new Vector();
         String nomEtudiant = (String) tableEtudiant.getValueAt(ligneSelectionne, 1);
-        int idEtudiant =  (int) tableEtudiant.getValueAt(ligneSelectionne, 0);
+        int idEtudiant = (int) tableEtudiant.getValueAt(ligneSelectionne, 0);
         v.add(idEtudiant);
         v.add(nomEtudiant);
-        DefaultTableModel model= (DefaultTableModel) tableEtudiantSelectionner.getModel();  
+        DefaultTableModel model = (DefaultTableModel) tableEtudiantSelectionner.getModel();
         model.addRow(v);
         tableEtudiantSelectionner.setModel(model);
-        
-        DefaultTableModel model1= (DefaultTableModel) tableEtudiant.getModel();
+
+        DefaultTableModel model1 = (DefaultTableModel) tableEtudiant.getModel();
         model1.removeRow(ligneSelectionne);
         tableEtudiant.setModel(model1);
-        
-        
+
+
     }//GEN-LAST:event_ajouteEtudiant
 
     private void retirerEtudiant(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retirerEtudiant
 
         int ligneSelectionne = tableEtudiantSelectionner.getSelectedRow();
-        Vector v=new Vector();
+        Vector v = new Vector();
         String nomEtudiant = (String) tableEtudiantSelectionner.getValueAt(ligneSelectionne, 1);
-        int idEtudiant =  (int) tableEtudiantSelectionner.getValueAt(ligneSelectionne, 0);
+        int idEtudiant = (int) tableEtudiantSelectionner.getValueAt(ligneSelectionne, 0);
         v.add(idEtudiant);
         v.add(nomEtudiant);
-        
-        DefaultTableModel model= (DefaultTableModel) tableEtudiant.getModel();  
+
+        DefaultTableModel model = (DefaultTableModel) tableEtudiant.getModel();
         model.addRow(v);
         tableEtudiant.setModel(model);
-        
-        DefaultTableModel model1= (DefaultTableModel) tableEtudiantSelectionner.getModel();
+
+        DefaultTableModel model1 = (DefaultTableModel) tableEtudiantSelectionner.getModel();
         model1.removeRow(ligneSelectionne);
         tableEtudiantSelectionner.setModel(model1);
-        
+
     }//GEN-LAST:event_retirerEtudiant
 
     private void selectionResponsable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectionResponsable
         int ligneSelectionne = tableEtudiantSelectionner.getSelectedRow();
         String nomEtudiant = (String) tableEtudiantSelectionner.getValueAt(ligneSelectionne, 1);
-        int idEtudiant =  (int) tableEtudiantSelectionner.getValueAt(ligneSelectionne, 0);
+        int idEtudiant = (int) tableEtudiantSelectionner.getValueAt(ligneSelectionne, 0);
         nomResponsable.setText(nomEtudiant);
         idResponsable.setText(String.valueOf(idEtudiant));
         validerChoixEquipe.setEnabled(true);
     }//GEN-LAST:event_selectionResponsable
 
     private void valider(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valider
-        
-        DAOFactory daoFactory=new DAOFactory();
-        DAOProjet daoProjet=daoFactory.getDAOProjet();
-        DAOParticipe daoParticipe= daoFactory.getDAOParticipe();
+
+        DAOFactory daoFactory = new DAOFactory();
+        DAOProjet daoProjet = daoFactory.getDAOProjet();
+        DAOParticipe daoParticipe = daoFactory.getDAOParticipe();
         JOptionPane res = null;
-        
+
         DefaultTableModel model;
-        model=(DefaultTableModel) tableEtudiantSelectionner.getModel();
-        Vector listeEtudiantSelectionne=new Vector();
-        listeEtudiantSelectionne=model.getDataVector();
-        if(!listeEtudiantSelectionne.isEmpty()&&!nomResponsable.getText().isEmpty()){
-            Participe participe=new Participe();
+        model = (DefaultTableModel) tableEtudiantSelectionner.getModel();
+        Vector listeEtudiantSelectionne = new Vector();
+        listeEtudiantSelectionne = model.getDataVector();
+        if (!listeEtudiantSelectionne.isEmpty() && !nomResponsable.getText().isEmpty()) {
+            Participe participe = new Participe();
             participe.setListeEtudiant(listeEtudiantSelectionne);
             participe.setIdProjet(Integer.parseInt(idProjetSelec.getText()));
             daoParticipe.addParticipe(idProjetSelec.getText(), listeEtudiantSelectionne);
-            daoProjet.setResponsableProjet(Integer.parseInt(idResponsable.getText()),idProjetSelec.getText());
-            
+            daoProjet.setResponsableProjet(Integer.parseInt(idResponsable.getText()), idProjetSelec.getText());
+
             res.showMessageDialog(null, "Equipe enregistrée.");
             this.dispose();
-            
-        }else{
+
+        } else {
             res.showMessageDialog(null, "Veuillez remplir correctement le formulaire.");
         }
     }//GEN-LAST:event_valider
@@ -424,7 +434,6 @@ public class ChoixEquipe extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable listeDeProjet;
-    private javax.swing.JLabel nomProjetSelec;
     private javax.swing.JLabel nomResponsable;
     private javax.swing.JTextField rechercheProjetT;
     private javax.swing.JTable tableEtudiant;
